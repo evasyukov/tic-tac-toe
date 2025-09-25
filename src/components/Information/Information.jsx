@@ -5,6 +5,7 @@ function Information({
   SetCurrentPlayer,
   isGameEnded,
   SetIsGameEnded,
+  isDraw,
 }) {
   return (
     <InformationLayout
@@ -12,6 +13,7 @@ function Information({
       SetCurrentPlayer={SetCurrentPlayer}
       isGameEnded={isGameEnded}
       SetIsGameEnded={SetIsGameEnded}
+      isDraw={isDraw}
     />
   )
 }

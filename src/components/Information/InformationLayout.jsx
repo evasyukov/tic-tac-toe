@@ -1,18 +1,29 @@
 import "./Information.css"
 
-function InformationLayout({ currentPlayer, isGameEnded }) {
+function InformationLayout({ currentPlayer, isGameEnded, isDraw }) {
   return (
     <>
       <div className="information">
         {/* если я не ошибаюсь, так делать не рекомендуется, но я решил выделить  currentPlayer немного
             хотя дипсик сказал, что так правильно :)*/}
-        <div className="information_about_step">
-          Сейчас ход: {<span className={`${currentPlayer.toLowerCase()}`}>{currentPlayer}</span>}
-        </div>
+        {!isGameEnded && (
+          <div className="information_about_step">
+            Сейчас ход:{" "}
+            <span className={`${currentPlayer.toLowerCase()}`}>
+              {currentPlayer}
+            </span>
+          </div>
+        )}
 
         {isGameEnded && (
           <div className="information_about_result">
-            Игра окончена! Победил {<span className={`${currentPlayer.toLowerCase()}`}>{currentPlayer}</span>}
+            Игра окончена!{" "}
+            {!isDraw && (
+              <p className={`${currentPlayer.toLowerCase()}`}>
+                Победа: {currentPlayer}
+              </p>
+            )}
+            {isDraw && <span>Ничья</span>}
           </div>
         )}
       </div>
