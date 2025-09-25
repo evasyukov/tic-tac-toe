@@ -1,0 +1,19 @@
+.information {
+    margin-bottom: 60px;
+}
+
+.information_about_step {
+    font-size: 32px;
+}
+
+.x {
+    color: #eed996;
+}
+
+.o {
+    color: #75e8d5;
+}
+
+.information_about_result{
+    font-size: 32px;
+}

@@ -7,7 +7,18 @@ function Game() {
   const [isDraw, SetIsDraw] = useState(false) // состояние ничьи
   const [field, SetField] = useState(["", "", "", "", "", "", "", "", ""]) // состояние поля
 
-  return <GameLayout />
+  return (
+    <GameLayout
+      currentPlayer={currentPlayer}
+      SetCurrentPlayer={SetCurrentPlayer}
+      isGameEnded={isGameEnded}
+      SetIsGameEnded={SetIsGameEnded}
+      isDraw={isDraw}
+      SetIsDraw={SetIsDraw}
+      field={field}
+      SetField={SetField}
+    />
+  )
 }
 
 export default Game
