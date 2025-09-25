@@ -8,7 +8,7 @@ function InformationLayout({ currentPlayer, isGameEnded, isDraw }) {
             хотя дипсик сказал, что так правильно :)*/}
         {!isGameEnded && (
           <div className="information_about_step">
-            Сейчас ход:{" "}
+            Ходит:{" "}
             <span className={`${currentPlayer.toLowerCase()}`}>
               {currentPlayer}
             </span>
@@ -18,12 +18,13 @@ function InformationLayout({ currentPlayer, isGameEnded, isDraw }) {
         {isGameEnded && (
           <div className="information_about_result">
             Игра окончена!{" "}
-            {!isDraw && (
+            {!isDraw ? (
               <p className={`${currentPlayer.toLowerCase()}`}>
                 Победа: {currentPlayer}
               </p>
+            ) : (
+              <p>Ничья</p>
             )}
-            {isDraw && <span>Ничья</span>}
           </div>
         )}
       </div>

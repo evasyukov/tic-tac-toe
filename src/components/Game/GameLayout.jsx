@@ -22,7 +22,16 @@ function GameLayout({
         SetIsGameEnded={SetIsGameEnded}
         isDraw={isDraw}
       />
-      <Field field={field} SetField={SetField} />
+      <Field
+        field={field}
+        SetField={SetField}
+        currentPlayer={currentPlayer}
+        SetCurrentPlayer={SetCurrentPlayer}
+        isGameEnded={isGameEnded}
+        SetIsGameEnded={SetIsGameEnded}
+        isDraw={isDraw}
+        SetIsDraw={SetIsDraw}
+      />
     </div>
   )
 }
