@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 import "./Game.css"
 
 import Information from "../Information/Information"
@@ -32,6 +34,13 @@ function GameLayout({
       />
     </div>
   )
+}
+
+GameLayout.propTypes = {
+  currentPlayer: PropTypes.string,
+  isGameEnded: PropTypes.bool,
+  isDraw: PropTypes.bool,
+  field: PropTypes.array,
 }
 
 export default GameLayout

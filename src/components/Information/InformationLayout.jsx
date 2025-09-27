@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 import "./Information.css"
 
 function InformationLayout({ currentPlayer, isGameEnded, isDraw }) {
@@ -30,6 +32,12 @@ function InformationLayout({ currentPlayer, isGameEnded, isDraw }) {
       </div>
     </>
   )
+}
+
+InformationLayout.propTypes = {
+  currentPlayer: PropTypes.string,
+  isGameEnded: PropTypes.bool,
+  isDraw: PropTypes.bool,
 }
 
 export default InformationLayout

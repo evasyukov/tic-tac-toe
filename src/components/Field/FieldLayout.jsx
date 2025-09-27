@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 import "./Field.css"
 
 function FieldLayout({ field, playerStep, isGameEnded, restartGame }) {
@@ -15,12 +17,21 @@ function FieldLayout({ field, playerStep, isGameEnded, restartGame }) {
         )}
         {isGameEnded && (
           <div className="field_restart-game">
-            <button className="restart-game" onClick={() => restartGame()}>Начать заново</button>
+            <button className="restart-game" onClick={() => restartGame()}>
+              Начать заново
+            </button>
           </div>
         )}
       </div>
     </>
   )
+}
+
+FieldLayout.propTypes = {
+  currentPlayer: PropTypes.string,
+  isGameEnded: PropTypes.bool,
+  isDraw: PropTypes.bool,
+  field: PropTypes.array,
 }
 
 export default FieldLayout

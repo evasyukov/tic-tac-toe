@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 import FieldLayout from "./FieldLayout"
 
 function Field({
@@ -85,6 +87,13 @@ function Field({
       restartGame={restartGame}
     />
   )
+}
+
+Field.propTypes = {
+  currentPlayer: PropTypes.string,
+  isGameEnded: PropTypes.bool,
+  isDraw: PropTypes.bool,
+  field: PropTypes.array,
 }
 
 export default Field
