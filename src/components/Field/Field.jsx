@@ -31,19 +31,24 @@ function Field({
     SetField(newField)
     SetCurrentPlayer(currentPlayer === "X" ? "O" : "X")
 
-    if (isWinner(newField)) {
+    if (isWinnerGame(newField)) {
       SetIsGameEnded(true)
+    }
+
+    if (isDrawGame(newField)) {
+      SetIsGameEnded(true)
+      SetIsDraw(true)
     }
   }
 
   // проверка на наличие победителя
-  function isWinner(newField) {
+  function isWinnerGame(field) {
     for (let pattern of WIN_PATTERNS) {
       const [a, b, c] = pattern
 
       // проверяем что все три ячейки заполнены и одинаковы
-      if (newField[a] && newField[a] === newField[b] && newField[a] === newField[c]) {
-        SetCurrentPlayer(newField[a])
+      if (field[a] && field[a] === field[b] && field[a] === field[c]) {
+        SetCurrentPlayer(field[a])
         return true
       }
     }
@@ -51,11 +56,33 @@ function Field({
     return null
   }
 
+  // проверка на ничью
+  function isDrawGame(field) {
+    let countCell = 0
+
+    for (const cell of field) {
+      if (cell !== "") countCell++
+    }
+
+    if (countCell === 9) return true
+  }
+
+  // возвращаем все значения в старт
+  function restartGame() {
+    SetField(["", "", "", "", "", "", "", "", ""])
+    SetCurrentPlayer("X")
+    SetIsGameEnded(false)
+    SetIsDraw(false)
+  }
+
   return (
     <FieldLayout
       field={field}
       currentPlayer={currentPlayer}
+      isDraw={isDraw}
+      isGameEnded={isGameEnded}
       playerStep={playerStep}
+      restartGame={restartGame}
     />
   )
 }
