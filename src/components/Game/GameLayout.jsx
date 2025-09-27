@@ -17,9 +17,7 @@ function GameLayout({
     <div className="game">
       <Information
         currentPlayer={currentPlayer}
-        SetCurrentPlayer={SetCurrentPlayer}
         isGameEnded={isGameEnded}
-        SetIsGameEnded={SetIsGameEnded}
         isDraw={isDraw}
       />
       <Field
