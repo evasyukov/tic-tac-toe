@@ -17,6 +17,7 @@ Information.propTypes = {
   currentPlayer: PropTypes.string,
   isGameEnded: PropTypes.bool,
   isDraw: PropTypes.bool,
+  winCounter: PropTypes.array,
 }
 
 export default Information

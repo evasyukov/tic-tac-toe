@@ -12,10 +12,11 @@ function InformationLayout({ currentPlayer, isGameEnded, isDraw, winCounter }) {
             <span className="o">{winCounter[1]} </span>
           </p>
         </div>
+
         {/* если я не ошибаюсь, так делать не рекомендуется, но я решил выделить  currentPlayer немного
             хотя дипсик сказал, что так правильно :)*/}
         {!isGameEnded && (
-          <div className="information_about_step">
+          <div className="information_game-status">
             Ходит:{" "}
             <span className={`${currentPlayer.toLowerCase()}`}>
               {currentPlayer}
@@ -24,7 +25,7 @@ function InformationLayout({ currentPlayer, isGameEnded, isDraw, winCounter }) {
         )}
 
         {isGameEnded && (
-          <div className="information_about_result">
+          <div className="information_game-status">
             Игра окончена!{" "}
             {!isDraw ? (
               <p className={`${currentPlayer.toLowerCase()}`}>

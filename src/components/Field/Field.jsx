@@ -1,4 +1,4 @@
-import PropTypes, { func } from "prop-types"
+import PropTypes from "prop-types"
 
 import FieldLayout from "./FieldLayout"
 
@@ -53,7 +53,6 @@ function Field({
       // проверяем что все три ячейки заполнены и одинаковы
       if (field[a] && field[a] === field[b] && field[a] === field[c]) {
         SetCurrentPlayer(field[a])
-
         winnerCounter(field[a])
 
         return true
@@ -79,11 +78,11 @@ function Field({
     const newWinCounter = [...winCounter]
     if (winner === "X") {
       newWinCounter[0] += 1
-      SetWinCounter(newWinCounter)
     } else {
       newWinCounter[1] += 1
-      SetWinCounter(newWinCounter)
     }
+
+    SetWinCounter(newWinCounter)
   }
 
   // возвращаем все значения в старт
@@ -111,6 +110,7 @@ Field.propTypes = {
   isGameEnded: PropTypes.bool,
   isDraw: PropTypes.bool,
   field: PropTypes.array,
+  winCounter: PropTypes.array,
 }
 
 export default Field
