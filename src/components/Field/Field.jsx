@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"
+import PropTypes, { func } from "prop-types"
 
 import FieldLayout from "./FieldLayout"
 
@@ -11,6 +11,8 @@ function Field({
   SetIsDraw,
   isGameEnded,
   SetIsGameEnded,
+  winCounter,
+  SetWinCounter,
 }) {
   const WIN_PATTERNS = [
     [0, 1, 2],
@@ -51,6 +53,9 @@ function Field({
       // проверяем что все три ячейки заполнены и одинаковы
       if (field[a] && field[a] === field[b] && field[a] === field[c]) {
         SetCurrentPlayer(field[a])
+
+        winnerCounter(field[a])
+
         return true
       }
     }
@@ -67,6 +72,18 @@ function Field({
     }
 
     if (countCell === 9) return true
+  }
+
+  // счетчик побед
+  function winnerCounter(winner) {
+    const newWinCounter = [...winCounter]
+    if (winner === "X") {
+      newWinCounter[0] += 1
+      SetWinCounter(newWinCounter)
+    } else {
+      newWinCounter[1] += 1
+      SetWinCounter(newWinCounter)
+    }
   }
 
   // возвращаем все значения в старт

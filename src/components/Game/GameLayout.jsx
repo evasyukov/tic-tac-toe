@@ -14,6 +14,8 @@ function GameLayout({
   SetIsDraw,
   field,
   SetField,
+  winCounter,
+  SetWinCounter,
 }) {
   return (
     <div className="game">
@@ -21,6 +23,7 @@ function GameLayout({
         currentPlayer={currentPlayer}
         isGameEnded={isGameEnded}
         isDraw={isDraw}
+        winCounter={winCounter}
       />
       <Field
         field={field}
@@ -31,6 +34,8 @@ function GameLayout({
         SetIsGameEnded={SetIsGameEnded}
         isDraw={isDraw}
         SetIsDraw={SetIsDraw}
+        winCounter={winCounter}
+        SetWinCounter={SetWinCounter}
       />
     </div>
   )
@@ -41,6 +46,7 @@ GameLayout.propTypes = {
   isGameEnded: PropTypes.bool,
   isDraw: PropTypes.bool,
   field: PropTypes.array,
+  winCounter: PropTypes.array,
 }
 
 export default GameLayout

@@ -2,10 +2,16 @@ import PropTypes from "prop-types"
 
 import "./Information.css"
 
-function InformationLayout({ currentPlayer, isGameEnded, isDraw }) {
+function InformationLayout({ currentPlayer, isGameEnded, isDraw, winCounter }) {
   return (
     <>
       <div className="information">
+        <div className="information_win-counter">
+          <p>
+            Счет: <span className="x">{winCounter[0]} </span> :{" "}
+            <span className="o">{winCounter[1]} </span>
+          </p>
+        </div>
         {/* если я не ошибаюсь, так делать не рекомендуется, но я решил выделить  currentPlayer немного
             хотя дипсик сказал, что так правильно :)*/}
         {!isGameEnded && (
