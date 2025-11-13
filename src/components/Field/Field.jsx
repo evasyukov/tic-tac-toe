@@ -1,116 +1,40 @@
-import PropTypes from "prop-types"
+import "./Field.css"
+import { store } from "../../store"
+import { useStore } from "../../hooks/useStore"
 
-import FieldLayout from "./FieldLayout"
+export function Field() {
+  const state = useStore()
 
-function Field({
-  field,
-  SetField,
-  currentPlayer,
-  SetCurrentPlayer,
-  isDraw,
-  SetIsDraw,
-  isGameEnded,
-  SetIsGameEnded,
-  winCounter,
-  SetWinCounter,
-}) {
-  const WIN_PATTERNS = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8], // Варианты побед по горизонтали
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8], // Варианты побед по вертикали
-    [0, 4, 8],
-    [2, 4, 6], // Варианты побед по диагонали
-  ]
-
-  // функция для хода игрока
+  // хода игрока
   function playerStep(id) {
-    if (field[id]) return // проверяем ячейку
+    if (state.field[id] || state.isGameEnded) return
 
-    const newField = [...field] // копируем поле
-    newField[id] = currentPlayer
-
-    SetField(newField)
-    SetCurrentPlayer(currentPlayer === "X" ? "O" : "X")
-
-    if (isWinnerGame(newField)) {
-      SetIsGameEnded(true)
-    }
-
-    if (isDrawGame(newField)) {
-      SetIsGameEnded(true)
-      SetIsDraw(true)
-    }
+    store.dispatch({ type: "PLAYER_STEP", payload: id })
   }
 
-  // проверка на наличие победителя
-  function isWinnerGame(field) {
-    for (let pattern of WIN_PATTERNS) {
-      const [a, b, c] = pattern
-
-      // проверяем что все три ячейки заполнены и одинаковы
-      if (field[a] && field[a] === field[b] && field[a] === field[c]) {
-        SetCurrentPlayer(field[a])
-        winnerCounter(field[a])
-
-        return true
-      }
-    }
-
-    return null
-  }
-
-  // проверка на ничью
-  function isDrawGame(field) {
-    let countCell = 0
-
-    for (const cell of field) {
-      if (cell !== "") countCell++
-    }
-
-    if (countCell === 9) return true
-  }
-
-  // счетчик побед
-  function winnerCounter(winner) {
-    const newWinCounter = [...winCounter]
-    if (winner === "X") {
-      newWinCounter[0] += 1
-    } else {
-      newWinCounter[1] += 1
-    }
-
-    SetWinCounter(newWinCounter)
-  }
-
-  // возвращаем все значения в старт
+  // сбрасываем значения состония
   function restartGame() {
-    SetField(["", "", "", "", "", "", "", "", ""])
-    SetCurrentPlayer("X")
-    SetIsGameEnded(false)
-    SetIsDraw(false)
+    store.dispatch({ type: "RESTART_GAME" })
   }
 
   return (
-    <FieldLayout
-      field={field}
-      currentPlayer={currentPlayer}
-      isDraw={isDraw}
-      isGameEnded={isGameEnded}
-      playerStep={playerStep}
-      restartGame={restartGame}
-    />
+    <div className="field">
+      {!state.isGameEnded && (
+        <ul className="field_list">
+          {state.field.map((item, index) => (
+            <li key={index} onClick={() => playerStep(index)}>
+              {item}
+            </li>
+          ))}
+        </ul>
+      )}
+      {state.isGameEnded && (
+        <div className="field_restart-game">
+          <button className="restart-game" onClick={() => restartGame()}>
+            Начать заново
+          </button>
+        </div>
+      )}
+    </div>
   )
 }
-
-Field.propTypes = {
-  currentPlayer: PropTypes.string,
-  isGameEnded: PropTypes.bool,
-  isDraw: PropTypes.bool,
-  field: PropTypes.array,
-  winCounter: PropTypes.array,
-}
-
-export default Field

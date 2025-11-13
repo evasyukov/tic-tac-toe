@@ -1,27 +1,11 @@
-import { useState } from "react"
-import GameLayout from "./GameLayout"
+import "./Game.css"
+import { Information, Field } from "../../components"
 
-function Game() {
-  const [currentPlayer, SetCurrentPlayer] = useState("X") // состояние очереди хода
-  const [isGameEnded, SetIsGameEnded] = useState(false) // состояние игры (завершена или нет)
-  const [isDraw, SetIsDraw] = useState(false) // состояние ничьи
-  const [field, SetField] = useState(["", "", "", "", "", "", "", "", ""]) // состояние поля
-  const [winCounter, SetWinCounter] = useState([0, 0]) // счетчик побед - X:O
-  
+export default function Game() {
   return (
-    <GameLayout
-      currentPlayer={currentPlayer}
-      SetCurrentPlayer={SetCurrentPlayer}
-      isGameEnded={isGameEnded}
-      SetIsGameEnded={SetIsGameEnded}
-      isDraw={isDraw}
-      SetIsDraw={SetIsDraw}
-      field={field}
-      SetField={SetField}
-      winCounter={winCounter}
-      SetWinCounter={SetWinCounter}
-    />
+    <div className="game">
+      <Information />
+      <Field />
+    </div>
   )
 }
-
-export default Game
