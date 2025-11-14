@@ -1,3 +1,4 @@
+import { createSlice } from "@reduxjs/toolkit"
 import { isWinner, isDraw } from "./utils.js"
 
 const initialState = {
@@ -8,20 +9,16 @@ const initialState = {
   winCounter: [0, 0], // счетчик побед - Х:О
 }
 
-export function reducerGame(state = initialState, action) {
-  const { type, payload } = action
-
-  switch (type) {
-    // ход игрока
-    case "PLAYER_STEP": {
+export const gameSlice = createSlice({
+  name: "game",
+  initialState,
+  reducers: {
+    playerStep: (state, action) => {
       const newField = [...state.field] // копируем поле
-      if (newField[payload]) return // проверяем ячейку
-      newField[payload] = state.currentPlayer 
+      if (newField[action.payload]) return // проверяем ячейку
+      newField[action.payload] = state.currentPlayer
 
-      // проверка победы
       const winner = isWinner(newField)
-
-      // победитель найден
       if (winner) {
         return {
           ...state,
@@ -31,11 +28,10 @@ export function reducerGame(state = initialState, action) {
             state.currentPlayer === "X"
               ? [state.winCounter[0] + 1, state.winCounter[1]]
               : [state.winCounter[0], state.winCounter[1] + 1],
-          currentPlayer: newField[payload],
+          currentPlayer: newField[action.payload],
         }
       }
 
-      // проверка ничьей
       const draw = isDraw(newField)
       if (draw) {
         return {
@@ -52,14 +48,16 @@ export function reducerGame(state = initialState, action) {
         field: newField,
         currentPlayer: state.currentPlayer === "X" ? "O" : "X",
       }
-    }
-    // рестарт игры
-    case "RESTART_GAME":
+    },
+
+    restartGame: (state) => {
       return {
         ...initialState,
         winCounter: state.winCounter,
       }
-    default:
-      return state
-  }
-}
+    },
+  },
+})
+
+export const { playerStep, restartGame } = gameSlice.actions
+export const gameReducer = gameSlice.reducer

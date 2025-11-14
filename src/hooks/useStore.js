@@ -12,10 +12,9 @@ export function useStore() {
     }
 
     const unsubscribe = store.subscribe(handleChange)
-
     // отписка при размонтировании
     return () => unsubscribe()
   }, [])
 
-  return state
+  return state.game
 }

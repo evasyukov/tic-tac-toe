@@ -1,20 +1,22 @@
-import "./Field.css"
+import { playerStep, restartGame } from "../../reducer"
 import { store } from "../../store"
 import { useStore } from "../../hooks/useStore"
+
+import "./Field.css"
 
 export function Field() {
   const state = useStore()
 
   // хода игрока
-  function playerStep(id) {
-    if (state.field[id] || state.isGameEnded) return
+  function stepPlayers(id) {
+    if (state.field[id]) return
 
-    store.dispatch({ type: "PLAYER_STEP", payload: id })
+    store.dispatch(playerStep(id))
   }
 
   // сбрасываем значения состония
-  function restartGame() {
-    store.dispatch({ type: "RESTART_GAME" })
+  function gameOver() {
+    store.dispatch(restartGame())
   }
 
   return (
@@ -22,7 +24,7 @@ export function Field() {
       {!state.isGameEnded && (
         <ul className="field_list">
           {state.field.map((item, index) => (
-            <li key={index} onClick={() => playerStep(index)}>
+            <li key={index} onClick={() => stepPlayers(index)}>
               {item}
             </li>
           ))}
@@ -30,7 +32,7 @@ export function Field() {
       )}
       {state.isGameEnded && (
         <div className="field_restart-game">
-          <button className="restart-game" onClick={() => restartGame()}>
+          <button className="restart-game" onClick={() => gameOver()}>
             Начать заново
           </button>
         </div>
