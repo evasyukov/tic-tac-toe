@@ -1,4 +1,3 @@
-import { createSlice } from "@reduxjs/toolkit"
 import { isWinner, isDraw } from "./utils.js"
 
 const initialState = {
@@ -9,16 +8,20 @@ const initialState = {
   winCounter: [0, 0], // счетчик побед - Х:О
 }
 
-export const gameSlice = createSlice({
-  name: "game",
-  initialState,
-  reducers: {
-    playerStep: (state, action) => {
-      const newField = [...state.field] // копируем поле
-      if (newField[action.payload]) return // проверяем ячейку
-      newField[action.payload] = state.currentPlayer
+export const gameReducer = (state = initialState, action) => {
+  switch (action.type) {
+    // ход игрока
+    case "PLAYER_STEP": {
+      const { index } = action.payload
+      if (state.field[index] || state.isGameEnded) return state
+
+      const newField = [...state.field]
+      newField[index] = state.currentPlayer
 
       const winner = isWinner(newField)
+      const draw = isDraw(newField)
+
+      // проверка на победу
       if (winner) {
         return {
           ...state,
@@ -28,11 +31,11 @@ export const gameSlice = createSlice({
             state.currentPlayer === "X"
               ? [state.winCounter[0] + 1, state.winCounter[1]]
               : [state.winCounter[0], state.winCounter[1] + 1],
-          currentPlayer: newField[action.payload],
+          currentPlayer: winner,
         }
       }
 
-      const draw = isDraw(newField)
+      // проверка на ничью
       if (draw) {
         return {
           ...state,
@@ -42,22 +45,23 @@ export const gameSlice = createSlice({
         }
       }
 
-      // смена игрока
+      // продолжаем игру
       return {
         ...state,
         field: newField,
         currentPlayer: state.currentPlayer === "X" ? "O" : "X",
       }
-    },
+    }
 
-    restartGame: (state) => {
+    // обнуление игры
+    case "RESTART_GAME": {
       return {
         ...initialState,
-        winCounter: state.winCounter,
+        winCounter: state.winCounter, // сохраняем счётчик побед
       }
-    },
-  },
-})
+    }
 
-export const { playerStep, restartGame } = gameSlice.actions
-export const gameReducer = gameSlice.reducer
+    default:
+      return state
+  }
+}

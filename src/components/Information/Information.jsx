@@ -1,33 +1,36 @@
+import { useSelector } from "react-redux"
+
 import "./Information.css"
-import { useStore } from "../../hooks/useStore"
 
 export function Information() {
-  const state = useStore()
+  const { currentPlayer, isGameEnded, isDraw, winCounter } = useSelector(
+    (state) => state.game
+  )
 
   return (
     <div className="information">
       <div className="information_win-counter">
         <p>
-          Счет: <span className="x">{state.winCounter[0]} </span> :{" "}
-          <span className="o">{state.winCounter[1]} </span>
+          Счет: <span className="x">{winCounter[0]} </span> :{" "}
+          <span className="o">{winCounter[1]} </span>
         </p>
       </div>
 
-      {!state.isGameEnded && (
+      {!isGameEnded && (
         <div className="information_game-status">
           Ходит:{" "}
-          <span className={`${state.currentPlayer.toLowerCase()}`}>
-            {state.currentPlayer}
+          <span className={`${currentPlayer.toLowerCase()}`}>
+            {currentPlayer}
           </span>
         </div>
       )}
 
-      {state.isGameEnded && (
+      {isGameEnded && (
         <div className="information_game-status">
           Игра окончена!{" "}
-          {!state.isDraw ? (
-            <p className={`${state.currentPlayer.toLowerCase()}`}>
-              Победа: {state.currentPlayer}
+          {!isDraw ? (
+            <p className={`${currentPlayer.toLowerCase()}`}>
+              Победа: {currentPlayer}
             </p>
           ) : (
             <p>Ничья</p>

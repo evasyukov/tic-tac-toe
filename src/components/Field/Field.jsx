@@ -1,36 +1,37 @@
-import { playerStep, restartGame } from "../../reducer"
-import { store } from "../../store"
-import { useStore } from "../../hooks/useStore"
+import { useDispatch, useSelector } from "react-redux"
 
+import { playerStep, RESTART_GAME } from "../../action"
 import "./Field.css"
 
 export function Field() {
-  const state = useStore()
+  const dispatch = useDispatch()
+  const field = useSelector((state) => state.game.field)
+  const isGameEnded = useSelector((state) => state.game.isGameEnded)
 
   // хода игрока
   function stepPlayers(id) {
-    if (state.field[id]) return
+    if (field[id]) return
 
-    store.dispatch(playerStep(id))
+    dispatch(playerStep(id))
   }
 
   // сбрасываем значения состония
   function gameOver() {
-    store.dispatch(restartGame())
+    dispatch(RESTART_GAME)
   }
 
   return (
     <div className="field">
-      {!state.isGameEnded && (
+      {!isGameEnded && (
         <ul className="field_list">
-          {state.field.map((item, index) => (
+          {field.map((item, index) => (
             <li key={index} onClick={() => stepPlayers(index)}>
               {item}
             </li>
           ))}
         </ul>
       )}
-      {state.isGameEnded && (
+      {isGameEnded && (
         <div className="field_restart-game">
           <button className="restart-game" onClick={() => gameOver()}>
             Начать заново

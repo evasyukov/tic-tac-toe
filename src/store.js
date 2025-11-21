@@ -1,8 +1,8 @@
 import { gameReducer } from "./reducer"
-import { configureStore } from "@reduxjs/toolkit"
+import { createStore, combineReducers } from "redux"
 
-export const store = configureStore({
-  reducer: {
-    game: gameReducer,
-  },
+const reducer = combineReducers({
+  game: gameReducer,
 })
+
+export const store = createStore(reducer)
